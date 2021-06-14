@@ -102,7 +102,7 @@ This script are called by the Matlab app and executed in the raspberry to run ro
 
 ## 6. YouTube tutorial
 I tried to explain the system on my YouTube channel here:
-https://www.youtube.com/channel/UCOK905LMFaZ4vKWw7bKHyUA
+https://www.youtube.com/watch?v=2jEhv6k0qoU&list=PL2WFkLlnc7_sC9Yg80icHE9x0goyS_JQl
 
 
 
