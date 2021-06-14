@@ -26,10 +26,10 @@ Same as yoraish. My observer machine is based on Ubuntu 20.04 and I use this PC 
 
 ### 2.4 - Connecting to WiFi
 I preferred to assign a static ip to the Raspberry like this:
-Add your network to wpa_supplicant.conf
+Open and modify wpa_supplicant.conf
 -  `sudo nano /etc/wpa_supplicant/wpa_supplicant.conf`
 
-Add this line at the end of the file:
+Adding this line at the end of the file:
 
     network={
             ssid="your-networks-SSID"
@@ -39,7 +39,7 @@ Open and modify /etc/dhcpcd.conf:
 
 -  `sudo nano /etc/dhcpcd.conf`
 
-Add this line at the end of the file matching your network setup. 
+Adding this line at the end of the file matching your network setup. 
 
     interface wlan0
     static ip_address=192.168.11.13
@@ -71,7 +71,17 @@ Test the lidar with `roslaunch ydlidar_ros X4.launch`. Visualize the scans in Rv
 ### 2.6 - Final
 Step 6 and 7 are the same as yoraish. I haven't performed step 8,9,10.
 
-## 3. Install Matlab GUI
+## 3. Robot system
+The robot architecture is explained in the figure:
+![system](/Images/system.png)
+
+Wiring diagram:
+![diagram](/Images/connection.png)
+
+ROS nodes:
+![ros](/Images/ros.png)
+
+## 4. Install Matlab GUI
 The robot works also without the Matlab application. You can control the robot sending message directly via ROS, but with the app is easier! 
 
 Dependencies:
@@ -82,12 +92,15 @@ Install the application:
 Open Matlab -> Apps-> Install App -> Install MatlabGUI.mlappinstall
 or run MatlabGUI.mlapp in /Matlab/src folder. 
 
-## 4. Raspberry Setup
+![matlab](/Images/gui.png)
+
+
+## 5. Raspberry Setup
 Copy the two script from Raspberry folder to your Raspberry in home position. 
 In order to work with your setup **change the ip address**.  
 This script are called by the Matlab app and executed in the raspberry to run ros packages, if you don't want to use the app, run it by terminal.
 
-## 5. YouTube tutorial
+## 6. YouTube tutorial
 I tried to explain the system on my YouTube channel here:
 https://www.youtube.com/channel/UCOK905LMFaZ4vKWw7bKHyUA
 
