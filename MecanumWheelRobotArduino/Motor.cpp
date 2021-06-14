@@ -20,11 +20,9 @@ Motor::Motor(Adafruit_MotorShield* AFMS, uint8_t motorPin, uint8_t encoderPinChA
   encoder = new Encoder(encoderPinChA, encoderPinChB);
   _wheelDiameter = wheelDiameter;
   _periodMs = periodMs;
-  _motorPin = motorPin;
-  _rpmConst = (float) (60000.0/_periodMs) / (encoder->getEncoderResolution()); 
-  _degConst = (float) 360.0 / (encoder->getEncoderResolution());
-  _rpmToRadsConst = (float) (2*3.14) / 60.0;
-  _speedRpm = 0; _speedRpm1 = 0; _speedRpm2 = 0; _speedRpm3 = 0;
+  _motorPin = motorPin; 
+  _radsConst = (float) (2*3.14159 * 1000 / _periodMs) / (encoder->getEncoderResolution());
+  _speed = 0; _speed1 = 0; _speed2 = 0; _speed3 = 0;
   _Ref=0;_Ek=0; _Ik=0;_IkOld = 0; _EkOld = 0;
 }
 
@@ -55,29 +53,18 @@ void Motor::motorRun(uint8_t motorSpinDirection){
 
 
 /*
- * Function: calculateMotorSpeedRpm
+ * Function: calculateMotorSpeed
  * ----------------------------
- * Function to calculate motor speed in rpm.
+ * Function to calculate motor speed.
  * The function use the encoder value associated with the motor.
  */
-void Motor::calculateMotorSpeedRpm(){
+void Motor::calculateMotorSpeed(){
   long currentEncValue = encoder->getEncoderValue();
   long oldEncValue = encoder->getEncoderValueOld();
-  _speedRpm = (currentEncValue - oldEncValue) * _rpmConst;
+  _speed = (currentEncValue - oldEncValue) * _radsConst;
   encoder->setEncoderValueOld(currentEncValue);
-  _speedRpmFilter = 0.2*_speedRpm + 0.2*_speedRpm1 + 0.3*_speedRpm2 + 0.3*_speedRpm3;
-  _speedRpm3 = _speedRpm2; _speedRpm2 = _speedRpm1; _speedRpm1 = _speedRpm;
-}
-
-
-/*
- * Function: calculateMotorPosDeg
- * ----------------------------
- * Function to calculate position in degree.
- * The function use the encoder value associated with the motor.
- */
-void Motor::calculateMotorPosDeg(){
-  _posDeg = ((int)(encoder->getEncoderValue() * _degConst)) % 360;
+  _speedFilter = 0.2*_speed + 0.2*_speed1 + 0.3*_speed2 + 0.3*_speed3;
+  _speed3 = _speed2; _speed2 = _speed1; _speed1 = _speed;
 }
 
 
@@ -86,12 +73,12 @@ void Motor::calculateMotorPosDeg(){
  * ----------------------------
  * Function to set and maintain with a PID controller the desired speed of the wheel.
  *    param:
- *    @desiredSpeedRpm: Desired speed of the wheel in rpm.
+ *    @desiredSpeed: Desired speed of the wheel in rad/s.
  */
-void Motor::setMotorSpeedPIDRpm(float desiredSpeedRpm){
+void Motor::setMotorSpeedPID(float desiredSpeed){
     
-    _Ref = desiredSpeedRpm;                         // Speed reference
-    _Ek = _Ref - _speedRpmFilter;                   // Calculate error
+    _Ref = desiredSpeed;                            // Speed reference
+    _Ek = _Ref - _speedFilter;                      // Calculate error
     _Ik = _Ek * (_periodMs/1000.0) + _IkOld;        // Calculate integral accion
     if(_Ik > MOTOR_MAX_U)       _Ik = MOTOR_MAX_U;  // Check and limit integral saturation
     else if(_Ik < MOTOR_MIN_U)  _Ik = MOTOR_MIN_U;  
@@ -104,9 +91,9 @@ void Motor::setMotorSpeedPIDRpm(float desiredSpeedRpm){
 
     _pwmValue = (uint8_t) (abs(_Uk)*255/MOTOR_MAX_U);
     
-    if(desiredSpeedRpm == 0){  motorRun(RELEASE);  _pwmValue = 0; _IkOld = 0;}
-    else if(_Uk > 0)           motorRun(FORWARD);          
-    else if(_Uk < 0)           motorRun(BACKWARD);                   
+    if(desiredSpeed == 0){      motorRun(RELEASE);  _pwmValue = 0; _IkOld = 0;}
+    else if(_Uk > 0)            motorRun(FORWARD);          
+    else if(_Uk < 0)            motorRun(BACKWARD);                   
 
     setMotorSpeedPwm(_pwmValue);
 }
@@ -131,14 +118,7 @@ void Motor::setPID(float Kp, float Ki, float Kd){
 
 /*************  GET FUNTIONS ***********/
 /***************************************/
-float Motor::getMotorSpeedRpm(){
-  return _speedRpm;
-}
 
-float Motor::getMotorSpeedRads(){
-  return _speedRpm * _rpmToRadsConst;
+float Motor::getMotorSpeed(){
+  return _speedFilter;
 } 
-
-float Motor::getMotorPosDeg(){
-  return _posDeg;
-}

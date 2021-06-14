@@ -1,0 +1,151 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="97515572" file="/home/stefano/Git/MecanumWheelRobot/Matlab/MatlabGUI.prj" location="/home/stefano/Git/MecanumWheelRobot/Matlab" name="MatlabGUI" target="target.mlapps" target-name="Package App">
+    <param.appname>MatlabGUI</param.appname>
+    <param.authnamewatermark>andresteve</param.authnamewatermark>
+    <param.email />
+    <param.company />
+    <param.icon />
+    <param.icons />
+    <param.summary />
+    <param.description />
+    <param.screenshot>/tmp/tp3d6a7033_ad0b_4671_a533_82e565eddd53.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms>
+      <item>glnxa64</item>
+    </param.platforms>
+    <param.output>${PROJECT_ROOT}</param.output>
+    <param.guid>90932b85-ba9c-4976-8950-2ddc88467100</param.guid>
+    <unset>
+      <param.email />
+      <param.company />
+      <param.icon />
+      <param.icons />
+      <param.summary />
+      <param.description />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}/MatlabGUI.mlapp</file>
+    </fileset.main>
+    <fileset.depfun>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/+internal/w2l.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/+internal/w2l.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/addToStartup.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/addToStartup.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/getRemoteBuildDir.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/getRemoteBuildDir.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/raspberrypi.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/raspberrypi.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/removeFromStartup.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+codertarget/+raspi/removeFromStartup.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+I2C/Base.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+I2C/BusTransactor.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+I2C/Master.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+I2C/Slave.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+SPI/Base.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+SPI/Master.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+matlab/+interface/BusTransactionInterface.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/+firmware/setupNanomsg.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/+firmware/setupUserland.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/BoardInfo.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/BoardParameters.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/Info.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/PWMBase.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/PWMBase2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/ServoBase.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/ServoBase2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/cameraboard.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/frameBuffer.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getRaspiBaseRoot.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getRaspiRoot.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getServerDir.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getServerName.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getServerPort.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/getServerVersion.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/hardware.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/hardwareDisplay.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/hts221.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/i2cdev.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/installV4l2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/isNewServerEnabled.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/joystick.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/launchServer.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/localizedWarning.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/lps25h.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/lsm9ds1.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/private/jpegread.mexa64</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/raspiBase.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/raspiBase2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/raspiDesktop.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/raspiDesktop2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/raspiOnline.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/sensehat.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/serialdev.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/servo.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/servo2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/spidev.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/spidev2.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/updateServer.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/+raspi/+internal/webcam.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/realtime/targets/raspi/@raspi/raspi.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/+internal/getIOServerRootDir.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/+peripherals/DigitalIO.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/+peripherals/PWM.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/+peripherals/SPI.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/+transport/TransportLayerUtility.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/ioserver/+matlabshared/+ioclient/IOProtocol.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/shared/svd/+matlabshared/+svd/+internal/getRootDir.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/raspberrypi/+codertarget/+raspi/+ros/getMasterUri.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/raspberrypi/@raspberrypi/raspberrypi.m</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/shared_linuxservices/+matlabshared/+internal/LinuxSystemInterface.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/shared_linuxservices/+matlabshared/+internal/NNReqClient.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/shared_linuxservices/+matlabshared/+internal/credentials.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/shared_linuxservices/+matlabshared/+internal/ipnode.p</file>
+      <file>/home/stefano/Documents/MATLAB/SupportPackages/R2020a/toolbox/target/supportpackages/shared_linuxservices/+matlabshared/+internal/ssh2client.p</file>
+      <file>${PROJECT_ROOT}/GUI_Img/Robot.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/arrow_dwn.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/arrow_left.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/arrow_right.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/arrow_up.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/back_left.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/back_right.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/fwd_left.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/fwd_right.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/staph.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/turn.png</file>
+      <file>${PROJECT_ROOT}/GUI_Img/turncw.png</file>
+    </fileset.depfun>
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="/home/stefano/Git/MecanumWheelRobot" name="Matlab" optional="false">/home/stefano/Git/MecanumWheelRobot/Matlab</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>/usr/local/MATLAB/R2020a</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>true</unix>
+      <mac>false</mac>
+      <windows>false</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>true</linux>
+      <solaris>false</solaris>
+      <osver>5.8.0-53-generic</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>glnxa64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

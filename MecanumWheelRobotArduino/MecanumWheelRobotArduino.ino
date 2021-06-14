@@ -6,6 +6,7 @@
 #include "std_msgs/Float32.h"
 #include "geometry_msgs/Point32.h"
 #include "geometry_msgs/PoseStamped.h"
+#include "geometry_msgs/Pose.h"
 
 
 /******************** CONFIG ****************************/
@@ -24,10 +25,10 @@
 #define MARVELMIND_OFST_X -78
 #define MARVELMIND_OFST_Y 100
 
-/********* Define Lidar mounting position **********/
+/********* Define Lidar parameters **********/
 #define LIDAR_OFST_X  0    
-#define LIDAR_OFST_Y  50
-#define LIDAR_ODO_CORRECTION_PERIOD 1000
+#define LIDAR_OFST_Y  0
+
 
 /******* Define Encoder connection to the Arduino *******/
 #define ENC_PIN_FR_A    49
@@ -43,7 +44,7 @@
 #define T_PERIOD_MS     20
 
 /************ Define ROS Communication ************/
-#define ROS_UPDATE_PERIOD  50
+#define ROS_UPDATE_PERIOD  60
 
 /********************************************************/
 
@@ -58,7 +59,7 @@ Robot myRobot = Robot(MOTOR_PIN_FR, MOTOR_PIN_FL, MOTOR_PIN_RR, MOTOR_PIN_RL,
 // Raspberry and Arduino communicate through Serial3
 class NewHardware : public ArduinoHardware {
       public:
-        NewHardware(): ArduinoHardware(&Serial3, 57600) {};
+        NewHardware(): ArduinoHardware(&Serial3, 250000) {};
 };
 
 //Callbacks function prototype
@@ -67,7 +68,6 @@ void cmdManualCallback( const std_msgs::UInt8& msg);
 void cmdSpeedCallback( const std_msgs::Float32& msg);
 void cmdTrayCallback( const geometry_msgs::Point32& msg);
 void lidarCallback( const geometry_msgs::PoseStamped& msg);
-void odometryCorrectionPeriodCallback( const std_msgs::UInt16& msg);
 
 //Node Handle
 ros::NodeHandle_<NewHardware> nh;   
@@ -78,29 +78,28 @@ ros::Subscriber<std_msgs::UInt8> subCmdManual("/cmdManual", &cmdManualCallback);
 ros::Subscriber<std_msgs::Float32> subCmdSpeed("/cmdSpeed", &cmdSpeedCallback);
 ros::Subscriber<geometry_msgs::Point32> subCmdTray("/cmdTray", &cmdTrayCallback);
 ros::Subscriber<geometry_msgs::PoseStamped> subLidarPos("/slam_out_pose", &lidarCallback);
-ros::Subscriber<std_msgs::UInt16> subOdometryCorrectionPeriod("/odometryCorrectionPeriod", &odometryCorrectionPeriodCallback);
 
 // ROS publisher
-geometry_msgs::Point32 robotPoseMsg;
-geometry_msgs::Point32 robotSpeedMsg;
+geometry_msgs::Pose robotPoseMsg;   //msg.position: robot position     msg.orientation: wheel speed reference
+geometry_msgs::Pose robotSpeedMsg;  //msg.position: robot speed        msg.orientation: wheel speed 
 geometry_msgs::Point32 robotImuMsg;
+geometry_msgs::Point32 robotLidarMsg;
 geometry_msgs::Point32 marvelmindHedgeMsg;
-std_msgs::UInt8 robotOdometryCorrectionMsg;  // msg.data = set to 1 when odometry is corrected 
+geometry_msgs::Point32 robotKalmanFilterMsg;
 ros::Publisher pubRobotPose("/robotPose", &robotPoseMsg);
 ros::Publisher pubRobotSpeed("/robotSpeed", &robotSpeedMsg);
 ros::Publisher pubRobotImu("/robotImu", &robotImuMsg);
+ros::Publisher pubRobotLidar("/robotLidar", &robotLidarMsg);
 ros::Publisher pubMarvelmindHedge("/marvelmindHedge", &marvelmindHedgeMsg);
-ros::Publisher pubRobotOdometryCorrection("/robotOdometryCorrection", &robotOdometryCorrectionMsg);
+ros::Publisher pubKalmanFilter("/robotKalmanFilter", &robotKalmanFilterMsg);
 
 //Marvelmind Indoor GPS
 MarvelmindHedge hedge;
 PositionValue hedgePosition;
-float hedgePositionOffsetX = 0, hedgePositionOffsetY = 0;
-                      
-unsigned long timeScanStart;
-uint8_t updateROSCounter=0, updateLidarCorrectionCounter=0;
+float mX, mY, hedgePositionOffsetX = 0, hedgePositionOffsetY = 0;                      
+unsigned long timeScanStart, startTime;
+uint8_t updateROSCounter=0, updateLidarCounter=0;
 long baudRate = 115200;
-float lidarOdometryCorrectionPeriod = 1000;
 
 void setup(){
   Serial.begin(baudRate);
@@ -113,17 +112,17 @@ void setup(){
   nh.subscribe(subCmdSpeed);
   nh.subscribe(subCmdTray);
   nh.subscribe(subLidarPos);
-  nh.subscribe(subOdometryCorrectionPeriod);
   nh.advertise(pubRobotPose);
   nh.advertise(pubRobotSpeed);
   nh.advertise(pubRobotImu);
+  nh.advertise(pubRobotLidar);
   nh.advertise(pubMarvelmindHedge);
-  nh.advertise(pubRobotOdometryCorrection);
+  nh.advertise(pubKalmanFilter);
   delay(1000);
-  myRobot.motorFR->setPID(0.05,0.8,0.2);
-  myRobot.motorFL->setPID(0.05,0.8,0.2);
-  myRobot.motorRR->setPID(0.05,0.8,0.2);
-  myRobot.motorRL->setPID(0.05,0.8,0.2);
+  myRobot.motorFR->setPID(0.1,1.6,0.4);
+  myRobot.motorFL->setPID(0.1,1.6,0.4);
+  myRobot.motorRR->setPID(0.1,1.6,0.4);
+  myRobot.motorRL->setPID(0.1,1.6,0.4);
   attachInterrupt(ENC_PIN_FR_A,updateEncoderFRChA,CHANGE);
   attachInterrupt(ENC_PIN_FR_B,updateEncoderFRChB,CHANGE);
   attachInterrupt(ENC_PIN_FL_A,updateEncoderFLChA,CHANGE);
@@ -141,15 +140,8 @@ void loop(){
   myRobot.ROSControl();
   myRobot.updateSpeed(); 
   myRobot.updatePos();
+  myRobot.updateKalmanFilter();
  
-
-  // Lidar correction
-  if(updateLidarCorrectionCounter >= (lidarOdometryCorrectionPeriod / T_PERIOD_MS)){
-    if(myRobot.lidarOdometryCorrection()){
-      robotOdometryCorrectionMsg.data = 1;   //Odometry corrected
-    }
-    updateLidarCorrectionCounter = 0; 
-  }
   
   //Every ROS_UPDATE_PERIOD get-send data to ROS
   if(updateROSCounter >= (ROS_UPDATE_PERIOD / T_PERIOD_MS)){
@@ -158,19 +150,22 @@ void loop(){
     //myRobot.serialDebug();
 
     // Robot
-    myRobot.getDataSendToROS(&robotPoseMsg, &robotSpeedMsg, &robotImuMsg);
+    myRobot.getDataSendToROS(&robotPoseMsg, &robotSpeedMsg, &robotImuMsg, &robotLidarMsg, &robotKalmanFilterMsg);
 
     // Marvelmind 
     hedge.read();
     if(hedge.getPositionFromMarvelmindHedge(&hedgePosition)){
       //Calculate Offset so hedge position will be (x,y) = (0,0) when a ROS_CMD_ODO_RST is received
-      if(myRobot.setOdometryPosition(0,0,0)){ 
+      if(myRobot.isPositionResetted()){ 
         hedgePositionOffsetX = (hedgePosition.x - MARVELMIND_OFST_X)/ 1000.0 ;
         hedgePositionOffsetY = (hedgePosition.y - MARVELMIND_OFST_Y)/ 1000.0 ;
       }
-      marvelmindHedgeMsg.x = (hedgePosition.x - MARVELMIND_OFST_X)/ 1000.0 - hedgePositionOffsetX;
-      marvelmindHedgeMsg.y = (hedgePosition.y - MARVELMIND_OFST_Y)/ 1000.0 - hedgePositionOffsetY;
+      mX = (hedgePosition.x - MARVELMIND_OFST_X)/ 1000.0 - hedgePositionOffsetX;
+      mY = (hedgePosition.y - MARVELMIND_OFST_Y)/ 1000.0 - hedgePositionOffsetY;
       marvelmindHedgeMsg.z = hedgePosition.z / 1000.0; 
+      // System reference change. robotX = -gpsY, robotY = gpsX.
+      marvelmindHedgeMsg.x = -mY;
+      marvelmindHedgeMsg.y = mX;
       pubMarvelmindHedge.publish(&marvelmindHedgeMsg);
     }
     
@@ -178,17 +173,15 @@ void loop(){
     pubRobotPose.publish(&robotPoseMsg);
     pubRobotSpeed.publish(&robotSpeedMsg);
     pubRobotImu.publish(&robotImuMsg);  
-    pubRobotOdometryCorrection.publish(&robotOdometryCorrectionMsg); 
+    pubRobotLidar.publish(&robotLidarMsg);
+    pubKalmanFilter.publish(&robotKalmanFilterMsg);
     nh.spinOnce(); 
-
-    if(robotOdometryCorrectionMsg.data == 1)   robotOdometryCorrectionMsg.data = 0;  //Set to zero once published
+    
     updateROSCounter = 0;
   }
   else{
     updateROSCounter++;
-    updateLidarCorrectionCounter++;
   }
-  
   while((millis()- timeScanStart) < T_PERIOD_MS){ ;}
     
 }
@@ -205,5 +198,11 @@ void cmdModeCallback( const std_msgs::UInt8& msg)           {myRobot.setCmdModeF
 void cmdManualCallback( const std_msgs::UInt8& msg)         {myRobot.setCmdManualFromROS(msg.data); }
 void cmdSpeedCallback( const std_msgs::Float32& msg)        {myRobot.setCmdSpeedFromROS(msg.data);  }
 void cmdTrayCallback( const geometry_msgs::Point32& msg)    {myRobot.setCmdTrayFromROS(msg.x, msg.y, msg.z);}
-void lidarCallback( const geometry_msgs::PoseStamped& msg)  {myRobot.setLidarPosFromROS(msg.pose.position.x - (LIDAR_OFST_X/1000.0), msg.pose.position.y - (LIDAR_OFST_Y/1000.0));}
-void odometryCorrectionPeriodCallback( const std_msgs::UInt16& msg)   {lidarOdometryCorrectionPeriod = msg.data;}
+void lidarCallback( const geometry_msgs::PoseStamped& msg)  {myRobot.setLidarPosFromROS(msg.pose.position.x, 
+                                                                                        msg.pose.position.y, 
+                                                                                        msg.pose.orientation.x,
+                                                                                        msg.pose.orientation.y,
+                                                                                        msg.pose.orientation.z,
+                                                                                        msg.pose.orientation.w,
+                                                                                        LIDAR_OFST_X/1000.0,
+                                                                                        LIDAR_OFST_Y/1000.0); }

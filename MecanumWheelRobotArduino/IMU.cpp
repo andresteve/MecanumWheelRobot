@@ -88,15 +88,15 @@ void IMU::calculateOffset(){
 }
 
 double IMU::getOrientationX(){
-  return _thetaX;
+  return _thetaX * _degToRadConst;
 }
 
 
 double IMU::getOrientationY(){
-  return _thetaY;
+  return _thetaY * _degToRadConst;
 }
 
 
 double IMU::getOrientationZ(){
-  return _thetaZ;
+  return _thetaZ * _degToRadConst;
 }
