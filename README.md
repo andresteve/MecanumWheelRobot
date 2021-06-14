@@ -1,7 +1,7 @@
 ﻿
 # Mecanum Wheel Robot.  Lidar+ROS+Raspberry+Arduino+Matlab+Kalman 
 
-Thanks to yoraish https://github.com/yoraish for the clear tutorial. 
+Thanks to yoraish https://github.com/yoraish for the good tutorial. 
 
 ## 1. Build the robot.
 
@@ -80,7 +80,7 @@ Dependencies:
  
 Install the application:
 Open Matlab -> Apps-> Install App -> Install MatlabGUI.mlappinstall
-Or run MatlabGUI.mlapp in /Matlab/src folder. 
+or run MatlabGUI.mlapp in /Matlab/src folder. 
 
 ## 4. Raspberry Setup
 Copy the two script from Raspberry folder to your Raspberry in home position. 
