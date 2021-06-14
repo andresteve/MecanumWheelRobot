@@ -12,7 +12,7 @@ I have used the chasis of the robot model "4WD mecanum wheel mobile arduino robo
 * Adafruit MotorShield v2
 * Adafruit BNO055 IMU 9DOF
 * YDLIDAR X4 lidar
-
+![Mecanum Wheel Robot](/Images/robot.png)
 ## 2. Follow yoraish  tutorial
 Go and check his project here https://github.com/yoraish/lidar_bot
 I followed step by step his tutorial, I will report here just the modification maded to fit my setup.
