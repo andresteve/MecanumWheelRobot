@@ -5,7 +5,7 @@ Thanks to yoraish https://github.com/yoraish for the good tutorial.
 
 ## 1. Build the robot.
 
-I have used the chasis of the robot model "4WD mecanum wheel mobile arduino robotics car" from Nexusrobot.com . The electronic components are: 
+I have used the chasis of the robot model "4WD mecanum wheel mobile arduino robotics car" from Nexusrobot.com . I changed all the electronic using these devices: 
 * Arduino Due
 * Raspberry Pi 4 ( I think that also Raspberry Pi 3 Model B will work)
 * Polulu Motors 37Dx70L with encoder 64 CPR and reductor 70:1
