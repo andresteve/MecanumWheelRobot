@@ -1,7 +1,10 @@
 ﻿
 # Mecanum Wheel Robot.  Lidar+ROS+Raspberry+Arduino+Matlab+Kalman 
 
-Thanks to yoraish https://github.com/yoraish for the good tutorial. 
+Tutorial on my YouTube channel here:
+https://www.youtube.com/watch?v=2jEhv6k0qoU&list=PL2WFkLlnc7_sC9Yg80icHE9x0goyS_JQl
+
+Thanks to yoraish https://github.com/yoraish for the ROS setup tutorial. 
 
 ## 1. Build the robot.
 
@@ -100,9 +103,7 @@ Copy the two script from Raspberry folder to your Raspberry in home position.
 In order to work with your setup **change the ip address**.  
 This script are called by the Matlab app and executed in the raspberry to run ros packages, if you don't want to use the app, run it by terminal.
 
-## 6. YouTube tutorial
-I tried to explain the system on my YouTube channel here:
-https://www.youtube.com/watch?v=2jEhv6k0qoU&list=PL2WFkLlnc7_sC9Yg80icHE9x0goyS_JQl
+
 
 
 
